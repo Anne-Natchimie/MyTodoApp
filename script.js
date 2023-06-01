@@ -76,8 +76,19 @@ async function readAllElement() { /* async permet de rendre la fonction asynchro
     });
 }
 
-async function addTaskToApi(tasks) {
-    const response = await fetch();
+async function addTaskToApi(task) {
+    /* envoi des données à l'API */
+
+    let myForm = new FormData(); 
+    myForm.append("task", task)
+    console.log(myForm);
+
+    const response = await fetch('http://127.0.0.1:8000/api/tasks', {
+        method:"POST"
+    });
+
+    console.log(response); 
+
 }
 
 addTaskToApi(); 
