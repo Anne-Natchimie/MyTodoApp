@@ -2,13 +2,14 @@ const inputBox = document.getElementById("input-box");
 const listContainer = document.getElementById("list-container"); 
 
 function addTask() {
-    if(inputBox.value === ''){
+    if(inputBox.value === '') {
         alert("You must write something!");
         console.log('écrire une tâche')
         
 
     } else {
         addItemToLi(inputBox.value); 
+        addTaskToApi(inputBox.value); 
     } 
 
     inputBox.value = ""; 
@@ -16,7 +17,7 @@ function addTask() {
     console.log('une tâche est inscrite'); 
 } 
 
-listContainer.addEventListener("click", function(e){
+listContainer.addEventListener("click", function(e) {
     if(e.target.tagName === "LI"){
         e.target.classList.toggle("checked");  
         saveData();
@@ -63,15 +64,30 @@ function readAllElement() {
 }
 */
 
-async function readAllElement(){ /* async permet de rendre la fonction asynchrone */
+async function readAllElement() { /* async permet de rendre la fonction asynchrone */
     console.log('interrogation API'); /* interrogation de l'api */
     const response = await fetch('http://127.0.0.1:8000/api/tasks'); /* await permet d'attendre l'éxecution d'une commande */
     console.log(response); 
     const tasks = await response.json(); /* conversion de la réponse en tableau */
     console.log(tasks);
     tasks.forEach(item => {
-        console.log(item.task)
+        console.log(item.id)
         addItemToLi(item.task)
     });
 }
 
+async function addTaskToApi(tasks) {
+    //console.log("donnée envoyée vers l'API");
+    let formData = newFormData(); 
+    formData.append("tache", task); 
+    formData.append("eta", 0); 
+    console.log(formData);
+    const response = await fetch('http://127.0.0.1:8000/api/tasks', {
+        method:"post",
+        body:formData
+    }); 
+
+    console.log(response.json);
+}
+
+addTaskToApi(); 
