@@ -66,28 +66,18 @@ function readAllElement() {
 
 async function readAllElement() { /* async permet de rendre la fonction asynchrone */
     console.log('interrogation API'); /* interrogation de l'api */
-    const response = await fetch('http://127.0.0.1:8000/api/tasks'); /* await permet d'attendre l'éxecution d'une commande */
+    const response = await fetch('http://127.0.0.1:8000/api/tasks'); /* await permet d'attendre l'éxecution d'une commande et fetch permet d'envoyer et de lire des données */
     console.log(response); 
     const tasks = await response.json(); /* conversion de la réponse en tableau */
-    console.log(tasks);
+    console.log(task);
     tasks.forEach(item => {
-        console.log(item.id)
+        console.log(item.task)
         addItemToLi(item.task)
     });
 }
 
 async function addTaskToApi(tasks) {
-    //console.log("donnée envoyée vers l'API");
-    let formData = newFormData(); 
-    formData.append("tache", task); 
-    formData.append("eta", 0); 
-    console.log(formData);
-    const response = await fetch('http://127.0.0.1:8000/api/tasks', {
-        method:"post",
-        body:formData
-    }); 
-
-    console.log(response.json);
+    const response = await fetch();
 }
 
 addTaskToApi(); 
