@@ -44,8 +44,9 @@ showTask();
 readAllElement(); 
 
 /* Fonction qui permet de lister */
-function addItemToLi(item) {
+function addItemToLi(item, id = 0) {
     let li = document.createElement("li");
+        li.setAttribute('ref', id); 
         li.innerHTML = item; 
         listContainer.appendChild(li); 
         let span = document.createElement("span"); 
@@ -69,10 +70,10 @@ async function readAllElement() { /* async permet de rendre la fonction asynchro
     const response = await fetch('http://127.0.0.1:8000/api/tasks'); /* await permet d'attendre l'éxecution d'une commande et fetch permet d'envoyer et de lire des données */
     console.log(response); 
     const tasks = await response.json(); /* conversion de la réponse en tableau */
-    console.log(task);
+    console.log(tasks);
     tasks.forEach(item => {
-        console.log(item.task)
-        addItemToLi(item.task)
+        console.log(item.tasks)
+        addItemToLi(item.tasks, item.id)
     });
 }
 
@@ -84,7 +85,8 @@ async function addTaskToApi(task) {
     console.log(myForm);
 
     const response = await fetch('http://127.0.0.1:8000/api/tasks', {
-        method:"POST"
+        method:"POST",
+        body:myForm
     });
 
     console.log(response); 
